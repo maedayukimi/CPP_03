@@ -6,14 +6,14 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 02:56:32 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/12 01:52:45 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 13:48:45 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap(const std::string& name)
-	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0), dead(false)
+	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0), _dead(false)
 {
 	std::cout << this->_name << " joined match.\n";
 }
@@ -23,15 +23,37 @@ ClapTrap::~ClapTrap()
 	std::cout << this->_name << " BOOOOM!\n";
 }
 
-void	ClapTrap::attack(const std::string& target)
+ClapTrap::ClapTrap(const ClapTrap& other)
+	: _name(other._name)
+	  , _hitPoints(other._hitPoints)
+	  , _energyPoints(other._energyPoints)
+	  , _attackDamage(other._attackDamage)
+	  , _dead(other._dead)
 {
-	if (!this->dead && this->_energyPoints != 0)
+}
+
+ClapTrap&	ClapTrap::operator=(const ClapTrap& other)
+{
+	if (this != &other)
+	{
+		_name = other._name;
+		_hitPoints = other._hitPoints;
+		_energyPoints = other._energyPoints;
+		_attackDamage = other._attackDamage;
+		_dead = other._dead;
+	}
+	return (*this);
+}
+
+void		ClapTrap::attack(const std::string& target)
+{
+	if (!this->_dead && this->_energyPoints != 0)
 	{
 		std::cout << this->_name << " ATTACKED " << target << ", " << this->_attackDamage << " DMG!\n";
 		this->_energyPoints--;
 		std::cout << this->_name << " Energy is " << this->_energyPoints << ".\n";
 	}
-	else if (this->dead)
+	else if (this->_dead)
 	{
 		std::cout << this->_name << "...?\n";
 		std::cout << "There's no response.\n";
@@ -44,7 +66,7 @@ void	ClapTrap::attack(const std::string& target)
 	}
 }
 
-void	ClapTrap::takeDamage(unsigned int amount)
+void		ClapTrap::takeDamage(unsigned int amount)
 {
 	if (amount != 0 && this->_hitPoints > (int)amount)
 	{
@@ -62,13 +84,13 @@ void	ClapTrap::takeDamage(unsigned int amount)
 		std::cout << this->_name << " was ATTACKED!\n";
 		std::cout << this->_name << " SMAAAASH!!\n";
 		this->_hitPoints = 0;
-		this->dead = true;
+		this->_dead = true;
 	}
 }
 
-void	ClapTrap::beRepaired(unsigned int amount)
+void		ClapTrap::beRepaired(unsigned int amount)
 {
-	if (!this->dead && amount != 0 && this->_energyPoints != 0)
+	if (!this->_dead && amount != 0 && this->_energyPoints != 0)
 	{
 		std::cout << this->_name << " get healed!\n";
 		this->_hitPoints += amount;
@@ -76,7 +98,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 		this->_energyPoints--;
 		std::cout << this->_name << " Energy is " << this->_energyPoints << ".\n";
 	}
-	else if (this->dead)
+	else if (this->_dead)
 	{
 		std::cout << this->_name << "...?\n";
 		std::cout << "There's no response.\n";

@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:24:50 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/16 15:41:22 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 14:10:35 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ ScavTrap::ScavTrap(const std::string& name)
 	this->_hitPoints = 100;
 	this->_energyPoints = 50;
 	this->_attackDamage = 20;
-	this->dead = false;
+	this->_dead = false;
 	std::cout << this->_name << " is BLACKWATCH!\n";
+}
+
+ScavTrap::ScavTrap(const ScavTrap& other)
+	: ClapTrap(other)
+{
 }
 
 ScavTrap::~ScavTrap()
@@ -27,9 +32,15 @@ ScavTrap::~ScavTrap()
 	std::cout << "DESTROYED!\n";
 }
 
-void	ScavTrap::attack(const std::string& target)
+ScavTrap&	ScavTrap::operator=(const ScavTrap& other)
 {
-	if (!this->dead && this->_energyPoints != 0)
+	ClapTrap::operator=(other);
+	return (*this);
+}
+
+void		ScavTrap::attack(const std::string& target)
+{
+	if (!this->_dead && this->_energyPoints != 0)
 	{
 		if (this->_name == "GENJI")
 			std::cout << "[OVERWATCH] " << this->_name << " *DragonBlade* " << target << ", " << this->_attackDamage << " DMG!\n";
@@ -38,7 +49,7 @@ void	ScavTrap::attack(const std::string& target)
 		this->_energyPoints--;
 		std::cout << "[OVERWATCH] " << this->_name << " Energy is " << this->_energyPoints << ".\n";
 	}
-	else if (this->dead)
+	else if (this->_dead)
 	{
 		std::cout << "[BLACKWATCH] " << this->_name << "...?\n";
 		std::cout << "[BLACKWATCH] " << "There's no response.\n";
@@ -51,7 +62,7 @@ void	ScavTrap::attack(const std::string& target)
 	}
 }
 
-void	ScavTrap::takeDamage(unsigned int amount)
+void		ScavTrap::takeDamage(unsigned int amount)
 {
 	if (amount != 0 && this->_hitPoints > (int)amount)
 	{
@@ -69,13 +80,13 @@ void	ScavTrap::takeDamage(unsigned int amount)
 		std::cout << "[BLACKWATCH] " << this->_name << " was ATTACKED!\n";
 		std::cout << "[BLACKWATCH] " << this->_name << " SMAAAASH!!\n";
 		this->_hitPoints = 0;
-		this->dead = true;
+		this->_dead = true;
 	}
 }
 
-void	ScavTrap::beRepaired(unsigned int amount)
+void		ScavTrap::beRepaired(unsigned int amount)
 {
-	if (!this->dead && amount != 0 && this->_energyPoints != 0)
+	if (!this->_dead && amount != 0 && this->_energyPoints != 0)
 	{
 		std::cout << "[BLACKWATCH] " << this->_name << " get healed!\n";
 		this->_hitPoints += amount;
@@ -83,7 +94,7 @@ void	ScavTrap::beRepaired(unsigned int amount)
 		this->_energyPoints--;
 		std::cout << "[BLACKWATCH] " << this->_name << " Energy is " << this->_energyPoints << ".\n";
 	}
-	else if (this->dead)
+	else if (this->_dead)
 	{
 		std::cout << "[BLACKWATCH] " << this->_name << "...?\n";
 		std::cout << "[BLACKWATCH] " << "There's no response.\n";
@@ -100,7 +111,7 @@ void	ScavTrap::beRepaired(unsigned int amount)
 	}
 }
 
-void	ScavTrap::guardGate()
+void		ScavTrap::guardGate()
 {
 	std::cout << "[BLACKWATCH] " << this->_name << " IS NOW GUARDIAN MODE...\n";
 }

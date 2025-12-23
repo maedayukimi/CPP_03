@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 03:15:31 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/16 03:23:53 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 14:37:00 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ class	FragTrap : public ClapTrap
 {
 	public:
 		FragTrap(const std::string& name);
+		FragTrap(const FragTrap& other);
 		~FragTrap();
 
-		void	attack(const std::string& target);
-		void	takeDamage(unsigned int amount);
-		void	beRepaired(unsigned int amount);
-		void	highFiveGuys();
+		FragTrap&	operator=(const FragTrap& other);
+		void		attack(const std::string& target);
+		void		takeDamage(unsigned int amount);
+		void		beRepaired(unsigned int amount);
+		void		highFiveGuys();
 };
 
 #endif

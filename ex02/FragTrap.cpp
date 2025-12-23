@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 03:01:03 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/16 15:44:32 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 14:38:44 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ FragTrap::FragTrap(const std::string& name)
 	_hitPoints = 100;
 	_energyPoints = 100;
 	_attackDamage = 30;
-	this->dead = false;
+	this->_dead = false;
 	std::cout << this->_name << " is TARON!\n";
+}
+
+FragTrap::FragTrap(const FragTrap& other)
+	: ClapTrap(other)
+{
 }
 
 FragTrap::~FragTrap()
@@ -27,9 +32,15 @@ FragTrap::~FragTrap()
 	std::cout << "Destroyed!\n";
 }
 
-void	FragTrap::attack(const std::string& target)
+FragTrap&	FragTrap::operator=(const FragTrap& other)
 {
-	if (!this->dead && this->_energyPoints != 0)
+	ClapTrap::operator=(other);
+	return (*this);
+}
+
+void		FragTrap::attack(const std::string& target)
+{
+	if (!this->_dead && this->_energyPoints != 0)
 	{
 		if (this->_name == "GENJI")
 			std::cout << "[TARON] " << this->_name << " *DragonBlade* " << target << ", " << this->_attackDamage << " DMG!\n";
@@ -38,7 +49,7 @@ void	FragTrap::attack(const std::string& target)
 		this->_energyPoints--;
 		std::cout << "[TARON] " << this->_name << " Energy is " << this->_energyPoints << ".\n";
 	}
-	else if (this->dead)
+	else if (this->_dead)
 	{
 		std::cout << "[TARON] " << this->_name << "...?\n";
 		std::cout << "[TARON] " << "There's no response.\n";
@@ -51,7 +62,7 @@ void	FragTrap::attack(const std::string& target)
 	}
 }
 
-void	FragTrap::takeDamage(unsigned int amount)
+void		FragTrap::takeDamage(unsigned int amount)
 {
 	if (amount != 0 && this->_hitPoints > (int)amount)
 	{
@@ -69,13 +80,13 @@ void	FragTrap::takeDamage(unsigned int amount)
 		std::cout << "[TARON] " << this->_name << " was ATTACKED!\n";
 		std::cout << "[TARON] " << this->_name << " SMAAAASH!!\n";
 		this->_hitPoints = 0;
-		this->dead = true;
+		this->_dead = true;
 	}
 }
 
-void	FragTrap::beRepaired(unsigned int amount)
+void		FragTrap::beRepaired(unsigned int amount)
 {
-	if (!this->dead && amount != 0 && this->_energyPoints != 0)
+	if (!this->_dead && amount != 0 && this->_energyPoints != 0)
 	{
 		std::cout << "[TARON] " << this->_name << " get healed!\n";
 		this->_hitPoints += amount;
@@ -83,7 +94,7 @@ void	FragTrap::beRepaired(unsigned int amount)
 		this->_energyPoints--;
 		std::cout << "[TARON] " << this->_name << " Energy is " << this->_energyPoints << ".\n";
 	}
-	else if (this->dead)
+	else if (this->_dead)
 	{
 		std::cout << "[TARON] " << this->_name << "...?\n";
 		std::cout << "[TARON] " << "There's no response.\n";
@@ -100,7 +111,7 @@ void	FragTrap::beRepaired(unsigned int amount)
 	}
 }
 
-void	FragTrap::highFiveGuys()
+void		FragTrap::highFiveGuys()
 {
 	std::cout << "HIGH FIVE!\n";
 }

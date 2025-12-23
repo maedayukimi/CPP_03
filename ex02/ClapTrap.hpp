@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:33:44 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/12 14:28:30 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 14:15:28 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ class ClapTrap
 		int		_hitPoints;
 		int		_energyPoints;
 		int		_attackDamage;
-		bool		dead;
+		bool		_dead;
 
 	public:
 		ClapTrap(const std::string& name);
+		ClapTrap(const ClapTrap& other);
 		virtual ~ClapTrap();
+
+		ClapTrap&	operator=(const ClapTrap& other);
 		virtual void	attack(const std::string& target);
 		virtual void	takeDamage(unsigned int amount);
 		virtual void	beRepaired(unsigned int amount);
