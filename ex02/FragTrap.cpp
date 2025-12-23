@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 03:01:03 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/23 14:38:44 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 22:14:41 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@ FragTrap::FragTrap(const std::string& name)
 	_energyPoints = 100;
 	_attackDamage = 30;
 	this->_dead = false;
+	std::cout << "[Frag] " << this->_name << " Appeared!\n";
 	std::cout << this->_name << " is TARON!\n";
 }
 
 FragTrap::FragTrap(const FragTrap& other)
 	: ClapTrap(other)
 {
+	std::cout << "[Frag] " << this->_name << " Coppied!\n";
 }
 
 FragTrap::~FragTrap()
 {
-	std::cout << "Destroyed!\n";
+	std::cout << "[Frag] " << this->_name << " Destroyed!\n";
 }
 
 FragTrap&	FragTrap::operator=(const FragTrap& other)

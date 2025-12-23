@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 02:56:32 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:31 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 22:08:21 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 ClapTrap::ClapTrap(const std::string& name)
 	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0), _dead(false)
 {
+	std::cout << "[Clap] " << this->_name << " Appeared!\n";
 	std::cout << this->_name << " joined the match.\n";
 }
 
@@ -25,11 +26,12 @@ ClapTrap::ClapTrap(const ClapTrap& other)
 	  , _attackDamage(other._attackDamage)
 	  , _dead(other._dead)
 {
+	std::cout << "[Clap] " << this->_name << " Coppied!\n";
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << this->_name << " left the match.\n";
+	std::cout << "[Clap] " << this->_name << " left the match.\n";
 }
 
 ClapTrap&	ClapTrap::operator=(const ClapTrap& other)

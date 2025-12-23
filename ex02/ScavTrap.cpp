@@ -6,7 +6,7 @@
 /*   By: mawako <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:24:50 by mawako            #+#    #+#             */
-/*   Updated: 2025/12/23 14:37:46 by mawako           ###   ########.fr       */
+/*   Updated: 2025/12/23 22:14:31 by mawako           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@ ScavTrap::ScavTrap(const std::string& name)
 	this->_energyPoints = 50;
 	this->_attackDamage = 20;
 	this->_dead = false;
+	std::cout << "[Scav] " << this->_name << " Appeared!\n";
 	std::cout << this->_name << " is BLACKWATCH!\n";
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other)
 	: ClapTrap(other)
 {
+	std::cout << "[Scav] " << this->_name << " Coppied!\n";
 }
 
 ScavTrap::~ScavTrap()
 {
-	std::cout << "DESTROYED!\n";
+	std::cout << "[Scav] " << this->_name << " DESTROYED!\n";
 }
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& other)
